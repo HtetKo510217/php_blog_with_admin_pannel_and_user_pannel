@@ -2,6 +2,7 @@
 
 require('../config.php');
 session_start();
+// unset($_SESSION);
 if($_POST) {
     $email = $_POST['email'];
     $password = $_POST['password'];
@@ -22,8 +23,8 @@ if($_POST) {
         $validPassword = password_verify($password,$hashed);
         $_SESSION['email'] = $realUser['email'];
         if($validPassword) {
-            $_SESSION['user_id'] = $realUser['id'];
-            $_SESSION['logged_in'] = time();
+            $_SESSION['isAdmin']['user_id'] = $realUser['id'];
+            $_SESSION['isAdmin']['logged_in'] = time();
             header('location:index.php');
             exit();
         }else {
