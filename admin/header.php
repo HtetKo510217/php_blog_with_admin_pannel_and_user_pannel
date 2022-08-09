@@ -37,14 +37,14 @@ scratch. This page gets rid of all links and provides the needed markup only.
           <i class="fas fa-search"></i>
         </a>
         <div class="navbar-search-block" style="display: none;">
-          <form class="form-inline">
+          <form class="form-inline" action="index.php" method="post">
             <div class="input-group input-group-sm">
-              <input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search">
+              <input class="form-control form-control-navbar" name="search" type="search" placeholder="Search" aria-label="Search">
               <div class="input-group-append">
                 <button class="btn btn-navbar" type="submit">
                   <i class="fas fa-search"></i>
                 </button>
-                <button class="btn btn-navbar" type="button" data-widget="navbar-search">
+                <button class="btn btn-navbar" type="submit" data-widget="navbar-search">
                   <i class="fas fa-times"></i>
                 </button>
               </div>
@@ -54,7 +54,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
       </li>
     </ul>
 
-    
+
   </nav>
   <!-- /.navbar -->
 
@@ -95,9 +95,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
-        
+
           <li class="nav-item">
-            <a href="#" class="nav-link">
+            <a href="index.php" class="nav-link">
               <i class="nav-icon fas fa-th"></i>
               <p>
                 Blogs
