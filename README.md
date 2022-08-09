@@ -2,7 +2,7 @@
 
 <!-- ABOUT THE PROJECT -->
 ## About The Project
-   ADMIN PANNEL AND USER PANNEL
+   Blog System With Admin Pannel and User Pannel
 ### Built With
 
 * Pure PHP
