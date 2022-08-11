@@ -101,8 +101,6 @@ if(empty($_POST['search'])) {
                     ?>
                   </tbody>
                 </table>
-
-                <h1>htetko</h1>
                 <nav aria-label="Page navigation example">
                   <?php
                     $prev = $pageno <=1 ?  "#":  '?pageno='.($pageno-1);
