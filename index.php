@@ -5,12 +5,27 @@ if(!isset($_SESSION['register'])) {
   header('location:login.php');
 }
 
+if (!empty($_GET['pageno'])) {
+  $pageno = $_GET['pageno'];
+
+}else {
+  $pageno =1;
+
+}
+
+$numOfrecs = 6;
+$offset = ($pageno - 1) * $numOfrecs;
+
 $stmt = $pdo->prepare("SELECT * FROM posts ORDER BY ID DESC");
 $stmt->execute();
 
+$rawResult = $stmt->fetchAll();
+$total_pages = ceil(count($rawResult) / $numOfrecs);
+ 
+$stmt = $pdo->prepare("SELECT * FROM posts ORDER BY ID DESC LIMIT $offset,$numOfrecs");
+$stmt->execute();
+
 $result = $stmt->fetchAll();
-
-
  ?>
 <?php require_once('header.php') ?>
 
@@ -45,8 +60,26 @@ $result = $stmt->fetchAll();
           }
           
           ?>
+          
         </div>
         <!-- /.row -->
+        <nav aria-label="Page navigation example">
+            <?php
+              $prev = $pageno <=1 ?  "#":  '?pageno='.($pageno-1);
+              $next = $pageno >= $total_pages ?  "#":  '?pageno='.($pageno+1);
+              ?>
+            <ul class="pagination justify-content-end">
+              <li class="page-item"><a class="page-link" href="?pageno=1">First</a></li>
+              <li class="page-item <?php if($pageno <=1) { echo "disabled";} ?>">
+                <a class="page-link" href="<?php echo $prev ?>">Previous</a>
+              </li>
+              <li class="page-item"><a class="page-link" href="#"><?php echo $pageno; ?></a></li>
+              <li class="page-item <?php if($pageno >= $total_pages) { echo "disabled";} ?>">
+                <a class="page-link" href="<?php echo $next ?>">Next</a>
+              </li>
+              <li class="page-item"><a class="page-link" href="?pageno=<?php echo $total_pages; ?>">Last</a></li>
+            </ul>
+          </nav>
       </div><!-- /.container-fluid -->
     </div>
     <!-- /.content -->
