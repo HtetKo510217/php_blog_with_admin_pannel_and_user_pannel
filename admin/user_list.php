@@ -5,6 +5,16 @@ session_start();
 if($_SESSION['register']['role'] !=1) {
   header('location:login.php');
 }
+if(isset($_POST['search'])) {
+  setcookie('search', $_POST['search'], time() + (86400 * 30), "/");
+}else {
+  if (empty($_GET['pageno'])) {
+     unset($_COOKIE['search']); 
+     setcookie('search', null, -1, '/'); 
+
+  }
+}
+
 if (!empty($_GET['pageno'])) {
   $pageno = $_GET['pageno'];
 
@@ -13,29 +23,29 @@ if (!empty($_GET['pageno'])) {
 
 }
 
-$numOfrecs = 2;
+$numOfrecs = 4;
 // $search = $_GET['search']
 $offset = ($pageno - 1) * $numOfrecs;
 
-if(empty($_POST['search'])) {
-  $stmt = $pdo->prepare("SELECT * FROM posts ORDER BY ID DESC");
+if(empty($_POST['search']) && empty($_COOKIE['search'])) {
+  $stmt = $pdo->prepare("SELECT * FROM users ORDER BY ID DESC");
   $stmt->execute();
   $rawResult = $stmt->fetchAll();
   $total_pages = ceil(count($rawResult) / $numOfrecs);
 
-  $stmt = $pdo->prepare("SELECT * FROM posts ORDER BY ID DESC LIMIT $offset,$numOfrecs");
+  $stmt = $pdo->prepare("SELECT * FROM users ORDER BY ID DESC LIMIT $offset,$numOfrecs");
   $stmt->execute();
-  $posts = $stmt->fetchAll();
+  $users = $stmt->fetchAll();
 }else {
-  $search = $_POST['search'];
-  $stmt = $pdo->prepare("SELECT * FROM posts WHERE title LIKE '%$search%' ORDER BY ID DESC");
+  $search = isset($_POST['search']) ? $_POST['search'] : $_COOKIE['search'];
+  $stmt = $pdo->prepare("SELECT * FROM users WHERE name LIKE '%$search%' ORDER BY ID DESC");
   $stmt->execute();
   $rawResult = $stmt->fetchAll();
   $total_pages = ceil(count($rawResult) / $numOfrecs);
 
-  $stmt = $pdo->prepare("SELECT * FROM posts WHERE title LIKE '%$search%' ORDER BY ID DESC LIMIT $offset,$numOfrecs");
+  $stmt = $pdo->prepare("SELECT * FROM users WHERE name LIKE '%$search%' ORDER BY ID DESC LIMIT $offset,$numOfrecs");
   $stmt->execute();
-  $posts = $stmt->fetchAll();
+  $users = $stmt->fetchAll();
 }
 
 ?>
@@ -49,7 +59,7 @@ if(empty($_POST['search'])) {
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0">All Blogs</h1>
+            <h1 class="m-0">Register User List</h1>
           </div>
         </div><!-- /.row -->
       </div><!-- /.container-fluid -->
@@ -64,29 +74,29 @@ if(empty($_POST['search'])) {
             <div class="card">
               <!-- /.card-header -->
               <div class="card-body">
-                <a href="create.php" class="btn btn-success my-4">New Blog Posts</a>
+                <a href="user_add.php" class="btn btn-success my-4">Create New User</a>
                 <table class="table table-bordered my-3">
                   <thead>
                     <tr class="text-center">
                       <th style="width: 10px">#</th>
-                      <th>Title</th>
-                      <th>Content</th>
+                      <th>Name</th>
+                      <th>Email</th>
                       <th style="width: 150px">Action</th>
                     </tr>
                   </thead>
                   <tbody>
                     <?php
                       $i =1;
-                    foreach($posts as $post) { ?>
+                    foreach($users as $user) { ?>
                     <tr>
                       <td><?php echo $i; ?></td>
-                      <td><?php echo $post['title']; ?></td>
+                      <td><?php echo $user['name']; ?></td>
                       <td>
-                      <?php echo substr($post['content'], 0, 50);?>
+                      <?php echo substr($user['email'], 0, 50);?>
                       </td>
                       <td>
-                        <a href="edit.php?id=<?php echo $post['id']; ?>" class="btn btn-info">Edit</a>
-                        <a href="delete.php?id=<?php echo $post['id']; ?>" class="btn btn-danger" onclick="confirm('Are you sure you want to delete?')">Delete</a>
+                        <a href="user_edit.php?id=<?php echo $user['id']; ?>" class="btn btn-info">Edit</a>
+                        <a href="user_delete.php?id=<?php echo $user['id']; ?>" class="btn btn-danger" onclick="confirm('Are you sure you want to delete?')">Delete</a>
                       </td>
                     </tr>
                     <?php

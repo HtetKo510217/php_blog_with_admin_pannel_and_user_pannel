@@ -101,6 +101,9 @@ if($_POST) {
                                 <button type="submit" class="btn btn-primary btn-sm">Post comment</button>
                                 <button type="reset" class="btn btn-outline-primary btn-sm">Cancel</button>
                               </div>
+                              <div class="float-left mt-2 pt-1">
+                                <a href="index.php" class="btn btn-secondary btn-sm px-5">Back</a>
+                              </div>
                             </div>
                           </form>
                         </div>

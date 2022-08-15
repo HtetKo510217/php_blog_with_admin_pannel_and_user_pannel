@@ -2,7 +2,7 @@
 require('../config.php');
 
 session_start();
-if(!isset($_SESSION['isAdmin'])) {
+if($_SESSION['register']['role'] !=1) {
   header('location:login.php');
 }
 
@@ -79,7 +79,7 @@ $result = $stmt->fetch(PDO::FETCH_ASSOC);
 
                 <div class="card-footer">
                     <a href="index.php" class="btn btn-secondary">Back</a>
-                  <button type="submit" class="btn btn-primary">Add</button>
+                  <button type="submit" class="btn btn-primary">Update</button>
                 </div>
               </form>
             </div>

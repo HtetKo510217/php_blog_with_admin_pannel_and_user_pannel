@@ -2,7 +2,7 @@
 require('../config.php');
 
 session_start();
-if(!isset($_SESSION['isAdmin'])) {
+if($_SESSION['register']['role'] !=1) {
   header('location:login.php');
 }
 if($_POST) {

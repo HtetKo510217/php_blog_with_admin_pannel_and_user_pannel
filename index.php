@@ -48,9 +48,9 @@ $result = $stmt->fetchAll();
                     <h5 class="card-title m-0"><?php echo $post['title'] ?></h5>
                   </div>
                   <div class="card-body">
-                    <img src="admin/images/<?php echo $post['image']?>" alt="" class="w-100 d-blok" style="min-height:200px;"><br>
+                    <img src="admin/images/<?php echo $post['image']?>" alt="" class="w-100 d-blok" style="min-height:200px; max-height:200px;"><br>
                     <p class="card-text"><?php echo substr($post['content'],0,20) ?></p>
-                    <a href="blog_detail.php?id=<?php echo $post['id'] ?>" class="btn btn-primary">Blog Detail</a>
+                    <a href="blog_detail.php?id=<?php echo $post['id'] ?>" class="btn btn-outline-primary col-md-12">Blog Detail</a>
                   </div>
                 </div>
               </div>

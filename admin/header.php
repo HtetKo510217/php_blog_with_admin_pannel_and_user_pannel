@@ -36,8 +36,13 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <a class="nav-link" data-widget="navbar-search" href="#" role="button">
           <i class="fas fa-search"></i>
         </a>
+        <?php 
+         $path = $_SERVER['PHP_SELF'];
+         $arr = explode('/',$path);
+         $page = end($arr);
+        ?>
         <div class="navbar-search-block" style="display: none;">
-          <form class="form-inline" action="index.php" method="post">
+          <form class="form-inline" action="<?php echo $page === 'index.php' ? 'index.php' : 'user_list.php' ?>" method="post">
             <div class="input-group input-group-sm">
               <input class="form-control form-control-navbar" name="search" type="search" placeholder="Search" aria-label="Search">
               <div class="input-group-append">
@@ -61,9 +66,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <!-- Main Sidebar Container -->
   <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
-    <a href="index3.html" class="brand-link">
+    <a href="../" class="brand-link">
       <img src="../dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
-      <span class="brand-text font-weight-light">AdminLTE 3</span>
+      <span class="brand-text font-weight-light">Blog</span>
     </a>
 
     <!-- Sidebar -->
@@ -73,8 +78,13 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <div class="image">
           <img src="../dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
         </div>
+        <?php
+            if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+            }
+            ?>
         <div class="info">
-          <a href="#" class="d-block">Alexander Pierce</a>
+          <a href="#" class="d-block"><?php echo $_SESSION['register']['username']; ?></a>
         </div>
       </div>
 
@@ -97,10 +107,18 @@ scratch. This page gets rid of all links and provides the needed markup only.
                with font-awesome or any other icon font library -->
 
           <li class="nav-item">
-            <a href="../index.php" class="nav-link">
+            <a href="index.php" class="nav-link">
               <i class="nav-icon fas fa-th"></i>
               <p>
                 Blogs
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="user_list.php" class="nav-link">
+              <i class="nav-icon fas fa-th"></i>
+              <p>
+                Users
               </p>
             </a>
           </li>

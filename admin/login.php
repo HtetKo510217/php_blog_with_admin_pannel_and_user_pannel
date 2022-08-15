@@ -23,7 +23,8 @@ if($_POST) {
         $validPassword = password_verify($password,$hashed);
         $_SESSION['email'] = $realUser['email'];
         if($validPassword) {
-            $_SESSION['isAdmin']['user_id'] = $realUser['id'];
+             $_SESSION['register']['username'] = $realUser['name'];
+            $_SESSION['register']['role'] = $realUser['role'];
             $_SESSION['isAdmin']['logged_in'] = time();
             header('location:index.php');
             exit();
@@ -54,12 +55,14 @@ if($_POST) {
   <link rel="stylesheet" href="../dist/css/adminlte.min.css">
 </head>
 <body class="hold-transition login-page">
-<div class="login-box">
+<div class="container">
+  <h4 class="text-center text-danger">Your don't have permission to perform admin pannel !! </h4>
+  <h5 class="text-center text-success">If you have admin account permission please !!</h5>
   <div class="login-logo">
-    <a href="login.php"><b>Login In</b></a>
+    <a href="login.php"><b>Login In </b></a>
   </div>
   <!-- /.login-logo -->
-  <div class="card">
+  <div class="card col-md-6 mx-auto">
     <div class="card-body login-card-body">
       <form action="login.php" method="post">
         <div class="input-group mb-3">

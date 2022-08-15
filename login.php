@@ -25,6 +25,7 @@ if($_POST) {
         $_SESSION['email'] = $realUser['email'];
         if($validPassword) {
             $_SESSION['register']['id'] = $realUser['id'];
+            $_SESSION['register']['role'] = $realUser['role'];
             $_SESSION['register']['username'] = $realUser['name'];
             $_SESSION['isAdmin']['logged_in'] = time();
             header('location:index.php');
